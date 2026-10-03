@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>politiQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17150f; --creme:#f3eee2; --papel:#fffdf7; --amarelo:#ffd43b; --azul:#3346ff;
+  --cinza:#6b6658; --bloq:#d9d3c3; --aviso:#fff3c4; --fundo:#e6dfcc;
+  --display:'Archivo Black', 'Arial Black', Impact, sans-serif;
+  --corpo:'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --u:min(calc((100dvh - 64px) / 557), 1.7px);
+  --t19:calc(19.8*var(--u)); --t79:calc(7.92*var(--u)); --t66:calc(6.6*var(--u)); --t9:calc(9.9*var(--u)); --u6:calc(6.6*var(--u));
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --fundo:#e6dfcc; } }
+:root[data-theme="dark"]{ --fundo:#e6dfcc; }
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--fundo);font-family:var(--corpo);color:var(--ink);display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+:focus-visible{outline:calc(2*var(--u)) solid var(--azul);outline-offset:calc(2*var(--u))}
+
+.celular{width:calc(257.4*var(--u));height:calc(557*var(--u));background:var(--creme);border:calc(2.64*var(--u)) solid var(--ink);border-radius:calc(23.76*var(--u));box-shadow:10px 10px 0 #17140f;display:flex;flex-direction:column;overflow:hidden;position:relative}
+@media (max-width:540px){
+  :root{--u:calc(100vw / 257.4)}
+  body{display:block}
+  .celular{width:100vw;height:100%;border:0;border-radius:0;box-shadow:none}
+  .header{padding-top:calc(14*var(--u))!important}
+}
+
+.header{background:var(--creme);border-bottom:calc(1.98*var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:calc(34.32*var(--u)) calc(13.2*var(--u)) calc(9.24*var(--u));flex-shrink:0}
+.logo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal}
+.pill{display:inline-flex;align-items:center;border-radius:calc(13.2*var(--u));padding:calc(3.3*var(--u)) calc(6.6*var(--u));font-weight:700;letter-spacing:calc(.66*var(--u));text-transform:uppercase;white-space:nowrap;line-height:normal;font-size:calc(7.26*var(--u))}
+.pill.borda{border:calc(1.32*var(--u)) solid var(--ink)}
+.pill.amarela{background:var(--amarelo)}
+.pill.branca{background:var(--papel)}
+.pill.azul{background:var(--azul);color:var(--papel)}
+.pill.preta{background:var(--ink);color:var(--amarelo);font-size:calc(6.6*var(--u))}
+.pill.cinza{background:var(--creme);color:var(--cinza);font-size:calc(5.94*var(--u))}
+.header .pill{font-size:calc(7.92*var(--u))}
+.pts-sobe{animation:sobe .5s ease}
+@keyframes sobe{40%{transform:scale(1.18)}}
+
+.conteudo{flex:1;min-height:0;overflow-y:auto;padding:calc(13.2*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u))}
+.conteudo.g8{gap:calc(7.92*var(--u))}
+.titulo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal;margin:0}
+.sub{color:var(--cinza);font-size:calc(9.24*var(--u));line-height:1.35;margin:0}
+.sub.pequeno{font-size:calc(8.58*var(--u))}
+.rotulo{font-weight:700;font-size:calc(7.92*var(--u));letter-spacing:calc(1.32*var(--u));text-transform:uppercase;margin:0}
+
+.cartao{background:var(--papel);border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(11.88*var(--u));box-shadow:calc(3.96*var(--u)) calc(3.96*var(--u)) 0 var(--ink);padding:calc(11.88*var(--u));display:flex;flex-direction:column;gap:calc(6.6*var(--u))}
+.barra{height:calc(9.24*var(--u));border:calc(1.32*var(--u)) solid var(--ink);border-radius:calc(5.28*var(--u));background:var(--papel);overflow:hidden;flex-shrink:0}
+.barra i{display:block;height:100%;background:var(--amarelo);border-right:calc(1.32*var(--u)) solid var(--ink);transition:width .4s}
+
+.linha{background:var(--papel);border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));padding:calc(7.92*var(--u));display:flex;gap:calc(7.92*var(--u));align-items:center;width:100%}
+.linha.sombra{box-shadow:calc(3.3*var(--u)) calc(3.3*var(--u)) 0 var(--ink)}
+.linha.sombra-p{box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}
+.linha.travada{background:var(--creme);border:calc(1.32*var(--u)) dashed var(--ink)}
+.linha.travada .txt{color:var(--cinza)}
+button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-shadow:none}
+.badge{width:calc(26.4*var(--u));height:calc(26.4*var(--u));border-radius:calc(6.6*var(--u));border:calc(1.32*var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:calc(11.88*var(--u));flex-shrink:0}
+.badge.preto{background:var(--ink);color:var(--amarelo)}
+.badge.amarelo{background:var(--amarelo)}
+.badge.cinza{background:var(--bloq)}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:calc(1.32*var(--u))}
+.txt b{font-size:calc(9.9*var(--u));font-weight:700}
+.txt span{font-size:calc(7.92*var(--u));color:var(--cinza);line-height:1.3}
+
+.botao{border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u)) calc(10.56*var(--u));font-weight:700;font-size:calc(9.9*var(--u));letter-spacing:calc(.66*var(--u));text-transform:uppercase;text-align:center;width:100%;transition:transform .08s, box-shadow .08s}
+.botao:active{transform:translate(calc(2.64*var(--u)),calc(2.64*var(--u)));box-shadow:0 0 0 var(--ink)}
+.botao.preto{background:var(--ink);color:var(--papel)}
+.botao.preto.amarelo-txt{color:var(--amarelo)}
+.botao.amarelo{background:var(--amarelo)}
+.botao.branco{background:var(--papel)}
+.acoes{display:flex;gap:calc(7.92*var(--u))}
+.pular{font-weight:700;font-size:calc(8.58*var(--u));color:var(--cinza);text-align:center;width:100%;padding:calc(4*var(--u))}
+
+/* quiz */
+.pergunta{font-family:var(--display);font-size:calc(14.52*var(--u));line-height:1.15;margin:0}
+.opcao{background:var(--papel);border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(1.98*var(--u)) calc(1.98*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u));font-weight:500;font-size:calc(9.9*var(--u));display:flex;align-items:center;gap:calc(5.28*var(--u));width:100%;transition:opacity .2s}
+.opcao>span:first-child{flex:1}
+.opcao.certa{background:var(--amarelo);border-width:calc(1.98*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}
+.opcao.errada{background:var(--ink);color:var(--papel)}
+.opcao.apagada{opacity:.4}
+.feedback{background:var(--aviso);border:calc(1.32*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));padding:calc(9.24*var(--u));display:flex;flex-direction:column;gap:calc(3.96*var(--u))}
+.feedback b{font-size:calc(7.92*var(--u));letter-spacing:calc(.99*var(--u));text-transform:uppercase}
+.feedback p{margin:0;font-size:calc(9.24*var(--u));line-height:1.35}
+
+/* voto */
+.lei{background:var(--papel);border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(13.2*var(--u));box-shadow:calc(6.6*var(--u)) calc(6.6*var(--u)) 0 var(--ink);padding:calc(14.52*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u));touch-action:pan-y;user-select:none;position:relative}
+.lei h2{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:1.08;margin:0;font-weight:400}
+.lei p{margin:0;font-size:calc(9.9*var(--u));line-height:1.4}
+.oculto{background:var(--creme);border:calc(1.32*var(--u)) dashed var(--ink);border-radius:calc(7.92*var(--u));padding:calc(7.92*var(--u));display:flex;gap:calc(6.6*var(--u));align-items:center;font-weight:700;font-size:calc(7.92*var(--u))}
+.oculto i{width:calc(59.4*var(--u));height:calc(9.24*var(--u));background:var(--ink);border-radius:calc(2.64*var(--u));flex-shrink:0}
+.fonte{font-size:calc(7.26*var(--u));color:var(--cinza);margin:0}
+.carimbo{position:absolute;bottom:calc(12*var(--u));font-family:var(--display);font-size:calc(13*var(--u));padding:calc(2*var(--u)) calc(7*var(--u));border:calc(2.5*var(--u)) solid var(--ink);border-radius:calc(6*var(--u));opacity:0;pointer-events:none}
+.carimbo.ap{right:calc(12*var(--u));background:var(--amarelo);transform:rotate(10deg)}
+.carimbo.rj{right:calc(12*var(--u));background:var(--ink);color:var(--papel);transform:rotate(-10deg)}
+.revelado{display:flex;flex-direction:column;gap:calc(6.6*var(--u))}
+.txt span.autor{font-family:var(--display);font-size:calc(12.5*var(--u));line-height:1.1;color:var(--ink)}
+.mini{font-size:calc(7.92*var(--u));color:var(--cinza)}
+.mini a{color:var(--azul);font-weight:700}
+.temas{display:flex;flex-wrap:wrap;gap:calc(5*var(--u))}
+
+/* nav */
+.nav{background:var(--papel);border-top:calc(1.98*var(--u)) solid var(--ink);display:flex;flex-shrink:0}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:calc(3.96*var(--u));padding:calc(7.92*var(--u)) calc(2.64*var(--u)) calc(17.16*var(--u));background:var(--papel)}
+.nav button i{width:calc(11.88*var(--u));height:calc(11.88*var(--u));border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(3.3*var(--u));background:var(--papel)}
+.nav button span{font-weight:700;font-size:calc(6.6*var(--u));letter-spacing:calc(.33*var(--u));text-transform:uppercase;white-space:nowrap}
+.nav button.ativo{background:var(--amarelo)}
+.nav button.ativo i{background:var(--ink)}
+@media (max-width:540px){ .nav button{padding-bottom:calc(calc(10*var(--u)) + env(safe-area-inset-bottom,0px))} }
+
+.aviso-toast{position:absolute;left:calc(13.2*var(--u));right:calc(13.2*var(--u));bottom:calc(72*var(--u));background:var(--ink);color:var(--amarelo);border-radius:calc(9.24*var(--u));padding:calc(9*var(--u)) calc(10*var(--u));font-weight:700;font-size:calc(8.6*var(--u));transform:translateY(calc(10*var(--u)));opacity:0;transition:.25s;pointer-events:none;z-index:5}
+.aviso-toast.on{opacity:1;transform:none}
+
+.oculto{position:relative;min-height:calc(30*var(--u))}
+.oculto .esc{transition:opacity .25s}
+.oculto .nome{display:none;flex-direction:column;gap:calc(1.5*var(--u))}
+.oculto .nome b{font-family:var(--display);font-weight:400;font-size:calc(12.5*var(--u));line-height:1.05}
+.oculto .nome small{font-size:calc(7.92*var(--u));font-weight:700}
+.oculto.revela{animation:caixa .35s .5s forwards}
+.oculto.revela i{animation:risca .5s cubic-bezier(.7,0,.3,1) forwards}
+.oculto.revela .esc{animation:some .2s forwards}
+.oculto.revela .nome{display:flex;opacity:0;transform:translateY(calc(5*var(--u)));animation:entra .35s .55s forwards}
+@keyframes risca{0%{width:calc(59.4*var(--u))}100%{width:0;margin-right:calc(-13.2*var(--u))}}
+@keyframes some{to{opacity:0;width:0;overflow:hidden;white-space:nowrap}}
+@keyframes caixa{to{background:var(--amarelo);border-style:solid;border-width:calc(1.98*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}}
+@keyframes entra{to{opacity:1;transform:none}}
+.carimbo.fixo{opacity:1!important;animation:carimba .3s cubic-bezier(.3,1.6,.5,1) both}
+.carimbo.ap.fixo{--r:10deg} .carimbo.rj.fixo{--r:-10deg}
+@keyframes carimba{0%{transform:scale(2) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:1}}
+.fonte a{color:var(--azul);font-weight:700}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="celular" id="cel">
+  <header class="header"><span class="logo">politiQ</span><span class="pill borda amarela" id="hpill">450 pts</span></header>
+  <main class="conteudo" id="tela"></main>
+  <nav class="nav" id="nav" aria-label="Navegação">
+    <button data-aba="trilhas"><i></i><span>Trilhas</span></button>
+    <button data-aba="voto"><i></i><span>Voto às Cegas</span></button>
+    <button data-aba="ferramentas"><i></i><span>Ferramentas</span></button>
+    <button data-aba="perfil"><i></i><span>Perfil</span></button>
+  </nav>
+  <div class="aviso-toast" id="toast" role="status"></div>
+</div>
+
+<script>
+// Projetos de lei reais. Autor e partido conferidos em fontes oficiais da Câmara e do Senado em out/2026.
+const LEIS=[
+ {n:'PL 2338/2023',tema:'Tecnologia',titulo:'Regras para a inteligência artificial',desc:'Cria regras para o desenvolvimento e o uso de inteligência artificial no Brasil, com exigências maiores nos usos de maior risco.',autor:'Rodrigo Pacheco',partido:'PSD-MG',link:'https://www25.senado.leg.br/web/atividade/materias/-/materia/157233'},
+ {n:'PL 3295/2024',tema:'Segurança',titulo:'Câmera no uniforme dos policiais',desc:'Torna obrigatório o uso de câmeras corporais por agentes de segurança em serviço em todo o país.',autor:'Erika Kokay',partido:'PT-DF',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2454889'},
+ {n:'PL 3780/2023',tema:'Segurança',titulo:'Penas maiores para furto e roubo',desc:'Aumenta as penas de furto, roubo e receptação de produtos roubados, com punição maior para quem rouba celulares e outros eletrônicos.',autor:'Kim Kataguiri',partido:'União-SP',obs:'Hoje é do partido Missão.',link:'https://www.camara.leg.br/noticias/1255362-camara-aprova-aumento-de-pena-para-furto-roubo-receptacao-e-latrocinio/'},
+ {n:'PL 67/2025',tema:'Trabalho',titulo:'Fim da escala 6x1',desc:'Reduz a jornada máxima para 40 horas semanais e garante dois dias de folga, sem redução de salário.',autor:'Daiana Santos',partido:'PCdoB-RS',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2482274'},
+ {n:'PL 159/2025',tema:'Transparência',titulo:'Menos sigilo nos gastos do governo',desc:'Limita os casos em que o governo pode colocar informações sob sigilo e obriga a divulgar gastos e patrimônio de autoridades.',autor:'Adriana Ventura',partido:'Novo-SP',obs:'Coautoria de Ricardo Salles (Novo-SP).',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2482576'},
+ {n:'PL 3915/2023',tema:'Comportamento',titulo:'Influenciadores sem propaganda de apostas',desc:'Proíbe influenciadores e artistas de divulgar casas de apostas e jogos de azar, com multa para quem descumprir.',autor:'Ricardo Ayres',partido:'Republicanos-TO',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2379219'},
+ {n:'PL 311/2024',tema:'Saúde',titulo:'Mais saúde mental no SUS',desc:'Cria um programa nacional para ampliar a oferta de psicólogos e psiquiatras no SUS.',autor:'Leo Prates',partido:'PDT-BA',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2418060'},
+ {n:'PL 3179/2012',tema:'Educação',titulo:'Educação dos filhos em casa',desc:'Permite que os pais eduquem os filhos em casa, o chamado homeschooling, com o aluno matriculado em uma escola que acompanha o aprendizado.',autor:'Lincoln Portela',partido:'PR-MG',obs:'Em 2019 o PR voltou a se chamar PL.',link:'https://www.camara.leg.br/noticias/877647-camara-aprova-projeto-que-permite-a-educacao-dos-filhos-em-casa-proposta-vai-ao-senado/'},
+ {n:'PL 2194/2024',tema:'Animais',titulo:'Cadastro de quem maltrata animais',desc:'Cria um cadastro nacional de pessoas condenadas por maus-tratos a animais, para monitorar reincidência.',autor:'Dayany Bittencourt',partido:'União-CE',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2437956'},
+ {n:'PL 2979/2023',tema:'Educação',titulo:'Educação financeira nas escolas',desc:'Inclui a educação financeira como tema obrigatório nos currículos do ensino fundamental e médio, trabalhado dentro das matérias que já existem.',autor:'Any Ortiz',partido:'Cidadania-RS',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2368275'},
+ {n:'PL 399/2015',tema:'Saúde',titulo:'Cultivo de cannabis para remédios',desc:'Autoriza o cultivo de cannabis por empresas autorizadas, exclusivamente para fins medicinais e industriais.',autor:'Fábio Mitidieri',partido:'PSD-SE',obs:'Era deputado quando apresentou; hoje é governador de Sergipe.',link:'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=947642'}
+];
+
+const QUIZ=[
+ {p:'Qual dos Três Poderes tem como função principal criar as leis?',o:['O Executivo','O Legislativo','O Judiciário','O Ministério Público'],c:1,
+  y:'O Legislativo cria e vota as leis. O Executivo administra e coloca as leis em prática, e o Judiciário julga conflitos com base nelas.'},
+ {p:'Quem cria e vota as leis que valem para todo o Brasil?',o:['O Congresso Nacional','A Prefeitura','O Supremo Tribunal Federal','Os governadores'],c:0,
+  y:'O Congresso Nacional, formado pela Câmara dos Deputados e pelo Senado, cria e vota as leis federais.'},
+ {p:'O Congresso Nacional é formado por quais duas Casas?',o:['Câmara Municipal e Assembleia Legislativa','Senado e Supremo Tribunal Federal','Câmara dos Deputados e Senado Federal','Câmara dos Deputados e Presidência'],c:2,
+  y:'São a Câmara dos Deputados e o Senado Federal. Por isso o sistema é chamado de bicameral, que quer dizer "com duas Casas".'},
+ {p:'Quem cria as leis que valem só para a sua cidade?',o:['O governador','O Senado','O Supremo Tribunal Federal','A Câmara Municipal, com os vereadores'],c:3,
+  y:'As leis municipais são votadas pelos vereadores na Câmara Municipal. Depois, o prefeito pode sancionar ou vetar.'},
+ {p:'Depois que o Congresso aprova um projeto de lei, o que acontece?',o:['Vira lei automaticamente','Vai para a Presidência, que pode sancionar ou vetar','Vai para o STF aprovar','Volta para a Câmara Municipal'],c:1,
+  y:'Sancionar é assinar e transformar o projeto em lei. Vetar é recusar, no todo ou em parte. O Congresso ainda pode derrubar um veto.'}
+];
+const LETRAS='ABCD';
+
+const st={aba:'trilhas',pts:450,aulas:1,quizFeito:false,
+  quiz:null, // {i, acertos, resp}
+  voto:{i:0,votos:[],fim:false,revelando:null}};
+
+const $=s=>document.querySelector(s);
+const tela=$('#tela'), hpill=$('#hpill'), nav=$('#nav');
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1900)}
+function ganhar(n){st.pts+=n;hpill.classList.remove('pts-sobe');void hpill.offsetWidth;hpill.classList.add('pts-sobe');setPill()}
+function setPill(){
+  if(st.quiz&&!st.quiz.fim){hpill.className='pill borda branca';hpill.textContent=`${st.quiz.i+1} de ${QUIZ.length}`}
+  else{hpill.className='pill borda amarela';hpill.textContent=`${st.pts} pts`}
+}
+function ir(aba){st.aba=aba;if(aba!=='quiz')st.quiz=null;render()}
+
+function render(){
+  nav.style.display = st.aba==='quiz' ? 'none' : 'flex';
+  nav.querySelectorAll('button').forEach(b=>b.classList.toggle('ativo',b.dataset.aba===st.aba));
+  tela.className='conteudo'+(st.aba==='ferramentas'?' g8':'');
+  ({trilhas:rTrilhas,quiz:rQuiz,voto:rVoto,ferramentas:rFerr,perfil:rPerfil})[st.aba]();
+  setPill(); tela.scrollTop=0;
+}
+
+function rTrilhas(){
+  const pct=st.aulas/4*100;
+  const l2 = st.quizFeito
+    ? `<div class="linha"><span class="badge preto">2</span><span class="txt"><b>Quem faz as leis?</b><span>Quiz · 5 perguntas</span></span><span class="pill preta">Feito</span></div>`
+    : `<button class="linha sombra" data-acao="quiz"><span class="badge amarelo">2</span><span class="txt"><b>Quem faz as leis?</b><span>Quiz · 5 perguntas</span></span><span class="pill azul" style="font-size:var(--u6)">Jogar</span></button>`;
+  const l3 = st.quizFeito
+    ? `<button class="linha sombra" data-acao="em-breve"><span class="badge amarelo">3</span><span class="txt"><b>Município, estado e União</b><span>Liberada</span></span><span class="pill azul">Jogar</span></button>`
+    : `<button class="linha travada" data-acao="bloqueada"><span class="badge cinza">3</span><span class="txt"><b>Município, estado e União</b><span>Bloqueada</span></span></button>`;
+  tela.innerHTML=`
+   <div class="cartao">
+     <span class="pill azul" style="align-self:flex-start">Módulo 01</span>
+     <h1 class="titulo" style="font-size:var(--t19);line-height:1">Como funciona o poder</h1>
+     <p class="sub">Os Três Poderes, quem faz o quê e por que isso importa no seu dia a dia.</p>
+     <div class="barra"><i style="width:${pct}%"></i></div>
+     <b style="font-size:var(--t79)">${st.aulas} de 4 aulas concluídas</b>
+   </div>
+   <p class="rotulo">Sua trilha</p>
+   <div class="linha"><span class="badge preto">1</span><span class="txt"><b>Os Três Poderes</b><span>Executivo, Legislativo e Judiciário</span></span><span class="pill preta">Feito</span></div>
+   ${l2}${l3}
+   <button class="linha travada" data-acao="bloqueada"><span class="badge cinza">4</span><span class="txt"><b>Como uma lei nasce</b><span>Bloqueada</span></span></button>`;
+}
+
+function rQuiz(){
+  const q=st.quiz;
+  if(q.fim){
+    tela.innerHTML=`
+     <span class="pill azul" style="align-self:flex-start">Quiz · Quem faz as leis?</span>
+     <div class="barra"><i style="width:100%"></i></div>
+     <div class="cartao"><p class="pergunta">Você acertou ${q.acertos} de ${QUIZ.length}.</p>
+       <p class="sub">+${q.acertos*10} pts. A próxima aula da trilha foi liberada.</p></div>
+     <div class="feedback"><b>O que você aprendeu</b><p>Quem cria as leis em cada nível: Congresso Nacional para o país, Câmara Municipal para a cidade, e o caminho até a sanção.</p></div>
+     <button class="botao preto amarelo-txt" data-acao="voltar-trilha">Voltar para a trilha</button>`;
+    return;
+  }
+  const item=QUIZ[q.i], r=q.resp;
+  const ops=item.o.map((t,k)=>{
+    let cls='opcao', tag='';
+    if(r!==null){
+      if(k===item.c){cls+=' certa';tag='<span class="pill preta">Certo!</span>'}
+      else if(k===r){cls+=' errada';tag='<span class="pill" style="background:var(--papel);color:var(--ink);font-size:var(--t66)">Sua resposta</span>'}
+      else cls+=' apagada';
+    }
+    return `<button class="${cls}" data-op="${k}" ${r!==null?'disabled':''}><span>${LETRAS[k]}) ${esc(t)}</span>${tag}</button>`;
+  }).join('');
+  tela.innerHTML=`
+   <span class="pill azul" style="align-self:flex-start">Quiz · Quem faz as leis?</span>
+   <div class="barra"><i style="width:${(q.i+(r!==null?1:0))/QUIZ.length*100}%"></i></div>
+   <div class="cartao" style="gap:0"><p class="pergunta">${esc(item.p)}</p></div>
+   ${ops}
+   ${r!==null?`<div class="feedback"><b>Por quê?</b><p>${esc(item.y)}</p></div>
+   <button class="botao preto amarelo-txt" data-acao="continuar">${q.i===QUIZ.length-1?'Ver resultado':'Continuar'}</button>`:''}`;
+}
+
+function rVoto(){
+  const v=st.voto;
+  if(v.fim) return rVotoFim();
+  const l=LEIS[v.i], r=v.revelando;
+  tela.innerHTML=`
+   <div style="display:flex;justify-content:space-between;align-items:center"><h1 class="titulo">Voto às Cegas</h1><span class="pill borda branca">${v.i+1} de ${LEIS.length}</span></div>
+   <p class="sub">Julgue a ideia. Quem propôs fica escondido até o fim.</p>
+   <article class="lei" id="lei">
+     <span class="pill azul" style="align-self:flex-start">Projeto de lei · ${esc(l.tema)}</span>
+     <h2>${esc(l.titulo)}</h2>
+     <p>${esc(l.desc)}</p>
+     <div class="oculto${r?' revela':''}"><i></i><span class="esc">Autor e partido ocultos</span>
+       <span class="nome" aria-live="polite"><b>${esc(l.autor)}</b><small>${esc(l.partido)} · ${esc(l.n)}</small></span></div>
+     ${r?`<p class="fonte">Partido na época em que apresentou o projeto.${l.obs?' '+esc(l.obs):''}</p>`:''}
+     <p class="fonte">${r?`<a href="${l.link}" target="_blank" rel="noopener">Ver na fonte oficial</a>`:'Projeto de lei real, com fonte oficial'}</p>
+     <span class="carimbo ap${r==='aprovo'?' fixo':''}">APROVO</span><span class="carimbo rj${r==='rejeito'?' fixo':''}">REJEITO</span>
+   </article>
+   ${r?`<button class="botao amarelo" data-acao="proxima" id="bprox">${v.i===LEIS.length-1?'Ver resumo':'Próxima lei'}</button>`
+   :`<div class="acoes">
+     <button class="botao preto" data-voto="rejeito">Rejeito</button>
+     <button class="botao amarelo" data-voto="aprovo">Aprovo</button>
+   </div>
+   <button class="pular" data-voto="pular">Pular esta lei</button>`}`;
+  if(!r) arrastar($('#lei'));
+}
+
+function rVotoFim(){
+  const vs=st.voto.votos.filter(x=>x.v!=='pular');
+  const ap=vs.filter(x=>x.v==='aprovo');
+  const cont={}; ap.forEach(x=>{cont[x.l.tema]=(cont[x.l.tema]||0)+1});
+  const temas=Object.keys(cont).sort((a,b)=>cont[b]-cont[a]);
+  const lista=st.voto.votos.map(x=>`
+    <div class="linha ${x.v==='aprovo'?'sombra-p':''}" style="align-items:flex-start${x.v==='pular'?';opacity:.55':''}">
+      <span class="badge ${x.v==='aprovo'?'amarelo':x.v==='rejeito'?'preto':'cinza'}" style="font-size:var(--t9)">${x.v==='aprovo'?'✓':x.v==='rejeito'?'✕':'–'}</span>
+      <span class="revelado txt"><b>${esc(x.l.titulo)}</b>
+        <span class="autor">${esc(x.l.autor)}</span>
+        <span class="mini">${esc(x.l.partido)}, ${esc(x.l.n)}. <a href="${x.l.link}" target="_blank" rel="noopener">Ver na fonte oficial</a></span></span>
+    </div>`).join('');
+  tela.innerHTML=`
+   <h1 class="titulo">Quem propôs</h1>
+   <p class="sub">Você julgou ${vs.length} ${vs.length===1?'ideia':'ideias'} sem saber de quem eram. Agora veja os autores.</p>
+   <div class="cartao">
+     <p class="rotulo">Temas que guiam suas escolhas</p>
+     ${temas.length?`<div class="temas">${temas.map((t,i)=>`<span class="pill ${i===0&&cont[t]>(cont[temas[1]]||0)?'azul':'borda branca'}">${esc(t)}</span>`).join('')}</div>
+     <p class="sub">${ap.length===1?'A lei que você aprovou veio':'As leis que você aprovou vieram'} de ${new Set(ap.map(x=>x.l.partido.split('-')[0])).size} ${new Set(ap.map(x=>x.l.partido.split('-')[0])).size===1?'partido':'partidos diferentes'}.</p>`
+     :`<p class="sub">Você não aprovou nenhuma lei nesta rodada.</p>`}
+   </div>
+   ${lista}
+   <button class="botao preto amarelo-txt" data-acao="refazer">Julgar de novo</button>`;
+}
+
+function rFerr(){
+  const ok=(t,d)=>`<button class="linha sombra-p" data-acao="${t==='Voto às Cegas'?'abrir-voto':'em-breve'}"><span class="badge amarelo">✓</span><span class="txt"><b>${t}</b><span>${d}</span></span></button>`;
+  const lock=(t,d)=>`<button class="linha travada" data-acao="bloqueada"><span class="badge cinza">•</span><span class="txt"><b>${t}</b><span>${d}</span></span><span class="pill borda cinza">Módulo</span></button>`;
+  tela.innerHTML=`
+   <h1 class="titulo">Ferramentas</h1>
+   <p class="sub pequeno">Cada módulo concluído libera uma ferramenta nova.</p>
+   ${ok('Voto às Cegas','Julgue projetos de lei sem saber quem propôs.')}
+   ${ok('Auditor de Contradições','Compare o discurso público com o voto registrado.')}
+   ${lock('Cadeira do Gestor','Monte um orçamento e veja as escolhas por trás dele.')}
+   ${lock('Raio-X Tributário','Veja quanto do seu trabalho vira imposto.')}
+   ${lock('Radar Anti-Fake News','Treine a reconhecer desinformação antes de compartilhar.')}`;
+}
+
+function rPerfil(){
+  const julgadas=st.voto.votos.filter(x=>x.v!=='pular').length;
+  tela.innerHTML=`
+   <h1 class="titulo">Perfil</h1>
+   <p class="sub">Seu caminho até aqui.</p>
+   <div class="cartao">
+     <span class="pill azul" style="align-self:flex-start">Nível 1 · Espectador</span>
+     <p class="pergunta">${st.pts} pts</p>
+     <div class="barra"><i style="width:${Math.min(100,(st.pts-400)/2)}%"></i></div>
+     <b style="font-size:var(--t79)">Faltam ${Math.max(0,600-st.pts)} pts para o próximo nível</b>
+   </div>
+   <div class="linha"><span class="badge preto">${st.aulas}</span><span class="txt"><b>Aulas concluídas</b><span>Módulo 01 · Como funciona o poder</span></span></div>
+   <div class="linha"><span class="badge amarelo">${julgadas}</span><span class="txt"><b>Leis julgadas</b><span>No Voto às Cegas</span></span></div>
+   <p class="mini">Seus votos ficam só neste aparelho.</p>`;
+}
+
+function arrastar(c){
+  let x0=0,dx=0,on=false;const ap=c.querySelector('.ap'),rj=c.querySelector('.rj');
+  c.addEventListener('pointerdown',e=>{on=true;x0=e.clientX;dx=0;c.setPointerCapture(e.pointerId);c.style.transition='none'});
+  c.addEventListener('pointermove',e=>{if(!on)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;ap.style.opacity=Math.max(0,Math.min(1,dx/80));rj.style.opacity=Math.max(0,Math.min(1,-dx/80))});
+  const fim=()=>{if(!on)return;on=false;if(Math.abs(dx)>90)votar(dx>0?'aprovo':'rejeito');else{c.style.transition='transform .2s';c.style.transform='';ap.style.opacity=rj.style.opacity=0}};
+  c.addEventListener('pointerup',fim);c.addEventListener('pointercancel',fim);
+}
+
+let trava=false;
+function votar(v){
+  const vt=st.voto; if(trava||vt.revelando||vt.fim)return; const c=$('#lei'); if(!c)return;
+  vt.votos.push({l:LEIS[vt.i],v});
+  if(v==='pular'){trava=true;c.style.transition='opacity .2s';c.style.opacity=0;
+    setTimeout(()=>{trava=false;proxima()},220);return}
+  ganhar(10); vt.revelando=v; render();
+}
+function proxima(){
+  const vt=st.voto; vt.revelando=null; vt.i++;
+  if(vt.i>=LEIS.length)vt.fim=true; render();
+}
+
+document.addEventListener('click',e=>{
+  const n=e.target.closest('[data-aba]'); if(n){ir(n.dataset.aba);return}
+  const v=e.target.closest('[data-voto]'); if(v){votar(v.dataset.voto);return}
+  const o=e.target.closest('[data-op]'); if(o&&st.quiz&&st.quiz.resp===null){
+    const k=+o.dataset.op; st.quiz.resp=k; if(k===QUIZ[st.quiz.i].c){st.quiz.acertos++;ganhar(10)} render(); return}
+  const a=e.target.closest('[data-acao]'); if(!a)return;
+  switch(a.dataset.acao){
+    case 'quiz': st.quiz={i:0,acertos:0,resp:null,fim:false}; st.aba='quiz'; render(); break;
+    case 'continuar': if(st.quiz.i<QUIZ.length-1){st.quiz.i++;st.quiz.resp=null}else{st.quiz.fim=true;if(!st.quizFeito){st.quizFeito=true;st.aulas=2}} render(); break;
+    case 'voltar-trilha': ir('trilhas'); break;
+    case 'refazer': st.voto={i:0,votos:[],fim:false,revelando:null}; render(); break;
+    case 'proxima': proxima(); break;
+    case 'abrir-voto': ir('voto'); break;
+    case 'bloqueada': toast('Conclua a aula anterior para liberar.'); break;
+    case 'em-breve': toast('Disponível na versão completa do app.'); break;
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(st.aba!=='voto'||st.voto.fim)return;
+  if(st.voto.revelando){if(['ArrowRight','Enter',' '].includes(e.key)){e.preventDefault();proxima()}return}
+  if(e.key==='ArrowRight')votar('aprovo');
+  if(e.key==='ArrowLeft')votar('rejeito');
+  if(e.key==='ArrowDown')votar('pular');
+});
+render();
+</script>
+</body>
+</html>
