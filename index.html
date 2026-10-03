@@ -24,7 +24,7 @@
 :root[data-theme="dark"]{ --fundo:#e6dfcc; }
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%;margin:0}
-html{touch-action:manipulation}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{overscroll-behavior:none}
 body{background:var(--fundo);font-family:var(--corpo);color:var(--ink);display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
@@ -99,6 +99,7 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .pergunta{font-family:var(--display);font-size:calc(14.52*var(--u));line-height:1.15;margin:0}
 .opcao{background:var(--papel);border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(1.98*var(--u)) calc(1.98*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u));font-weight:500;font-size:calc(9.9*var(--u));display:flex;align-items:center;gap:calc(5.28*var(--u));width:100%;min-height:44px;transition:opacity .2s}
 .opcao>span:first-child{flex:1}
+.opcao:not(:disabled):active{transform:translate(calc(1.98*var(--u)),calc(1.98*var(--u)));box-shadow:none}
 .opcao.certa{background:var(--amarelo);border-width:calc(1.98*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}
 .opcao.errada{background:var(--ink);color:var(--papel)}
 .opcao.apagada{opacity:.4}
@@ -127,6 +128,7 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:calc(3.96*var(--u));padding:calc(7.92*var(--u)) calc(2.64*var(--u)) calc(17.16*var(--u));background:var(--papel)}
 .nav button i{width:calc(11.88*var(--u));height:calc(11.88*var(--u));border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(3.3*var(--u));background:var(--papel)}
 .nav button span{font-weight:700;font-size:calc(6.6*var(--u));letter-spacing:calc(.33*var(--u));text-transform:uppercase;white-space:nowrap}
+.nav button:active{background:var(--creme)}
 .nav button.ativo{background:var(--amarelo)}
 .nav button.ativo i{background:var(--ink)}
 @media (max-width:540px){ .nav button{padding-bottom:calc(calc(10*var(--u)) + env(safe-area-inset-bottom,0px))} }
