@@ -152,6 +152,17 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .carimbo.ap.fixo{--r:10deg} .carimbo.rj.fixo{--r:-10deg}
 @keyframes carimba{0%{transform:scale(2) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:1}}
 .fonte a{color:var(--azul);font-weight:700}
+/* piso de legibilidade no celular: abaixo de 11px o tamanho para de encolher; acima disso nada muda */
+@media (max-width:540px){
+  :root{--t79:max(11px,calc(7.92*var(--u)));--t66:max(11px,calc(6.6*var(--u)));--u6:max(11px,calc(6.6*var(--u)))}
+  .pill{font-size:max(11px,calc(7.26*var(--u)))}
+  .pill.preta{font-size:max(11px,calc(6.6*var(--u)))}
+  .pill.cinza{font-size:max(11px,calc(5.94*var(--u)))}
+  .header .pill,.rotulo,.txt span,.feedback b,.oculto,.oculto .nome small,.mini{font-size:max(11px,calc(7.92*var(--u)))}
+  .sub.pequeno,.pular{font-size:max(11px,calc(8.58*var(--u)))}
+  .aviso-toast{font-size:max(11px,calc(8.6*var(--u)))}
+  .nav button span{font-size:max(11px,calc(6.6*var(--u)));letter-spacing:0}
+}
 @media (prefers-reduced-motion: reduce){
   *{transition:none!important;animation:none!important}
   /* sem animação, a revelação vai direto ao estado final */
