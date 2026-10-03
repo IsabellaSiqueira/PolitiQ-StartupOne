@@ -32,17 +32,18 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 .celular{width:calc(257.4*var(--u));height:calc(557*var(--u));background:var(--creme);border:calc(2.64*var(--u)) solid var(--ink);border-radius:calc(23.76*var(--u));box-shadow:10px 10px 0 #17140f;display:flex;flex-direction:column;overflow:hidden;position:relative}
 @media (max-width:540px){
-  :root{--u:calc(100vw / 257.4)}
+  /* no celular as safe areas entram no header e na barra de baixo, não no :root */
+  :root{--u:calc(100vw / 257.4);padding:0}
   body{display:block}
   .celular{width:100vw;height:100%;border:0;border-radius:0;box-shadow:none}
-  .header{padding-top:calc(14*var(--u))!important}
+  .header{padding-top:calc(14*var(--u) + env(safe-area-inset-top,0px))!important}
 }
 @supports (height:100dvh){ html{height:100dvh} }
 /* telas mais baixas que o mockup (ou com a barra do navegador visível): só os respiros verticais encolhem */
 @media (max-width:540px) and (min-aspect-ratio:1/2){
   :root{--u:min(calc(100vw / 257.4), calc((100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) / 430))}
   @supports (height:100dvh){ :root{--u:min(calc(100vw / 257.4), calc((100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) / 430))} }
-  .header{padding-top:calc(7*var(--u))!important;padding-bottom:calc(6*var(--u))}
+  .header{padding-top:calc(7*var(--u) + env(safe-area-inset-top,0px))!important;padding-bottom:calc(6*var(--u))}
   .conteudo{padding:calc(9.9*var(--u)) calc(13.2*var(--u));gap:calc(6.6*var(--u))}
   .lei{padding:calc(11*var(--u));gap:calc(6.6*var(--u))}
 }
