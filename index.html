@@ -175,6 +175,14 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
   .aviso-toast{font-size:max(11px,calc(8.6*var(--u)))}
   .nav button span{font-size:max(11px,calc(6.6*var(--u)));letter-spacing:0}
 }
+/* celular deitado: o mockup ficaria minúsculo, então pede para girar */
+.girar{display:none}
+@media (orientation:landscape) and (max-height:540px) and (pointer:coarse){
+  .girar{display:flex;position:fixed;inset:0;z-index:20;align-items:center;justify-content:center;background:var(--creme);padding:16px}
+  .girar div{display:flex;align-items:center;gap:16px;background:var(--papel);border:3px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);padding:18px 24px}
+  .girar i{width:26px;height:42px;border:3px solid var(--ink);border-radius:6px;background:var(--amarelo);flex-shrink:0}
+  .girar b{font-family:var(--display);font-weight:400;font-size:20px;line-height:1.1}
+}
 @media (prefers-reduced-motion: reduce){
   *{transition:none!important;animation:none!important}
   /* sem animação, a revelação vai direto ao estado final */
@@ -196,6 +204,7 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
   </nav>
   <div class="aviso-toast" id="toast" role="status"></div>
 </div>
+<div class="girar"><div><i></i><b>Gire o celular para a vertical</b></div></div>
 
 <script>
 // Projetos de lei reais. Autor e partido conferidos em fontes oficiais da Câmara e do Senado em out/2026.
