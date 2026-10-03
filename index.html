@@ -139,7 +139,13 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .carimbo.ap.fixo{--r:10deg} .carimbo.rj.fixo{--r:-10deg}
 @keyframes carimba{0%{transform:scale(2) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:1}}
 .fonte a{color:var(--azul);font-weight:700}
-@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+  /* sem animação, a revelação vai direto ao estado final */
+  .oculto.revela{background:var(--amarelo);border-style:solid;border-width:calc(1.98*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}
+  .oculto.revela i,.oculto.revela .esc{display:none}
+  .oculto.revela .nome{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
