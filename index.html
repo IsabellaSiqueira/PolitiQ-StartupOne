@@ -24,6 +24,7 @@
 :root[data-theme="dark"]{ --fundo:#e6dfcc; }
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%;margin:0}
+html{touch-action:manipulation}
 body{background:var(--fundo);font-family:var(--corpo);color:var(--ink);display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
 :focus-visible{outline:calc(2*var(--u)) solid var(--azul);outline-offset:calc(2*var(--u))}
@@ -371,7 +372,7 @@ function votar(v){
   vt.votos.push({l:LEIS[vt.i],v});
   if(v==='pular'){trava=true;c.style.transition='opacity .2s';c.style.opacity=0;
     setTimeout(()=>{trava=false;proxima()},220);return}
-  ganhar(10); vt.revelando=v; render();
+  ganhar(10); vt.revelando=v; vt.revelouEm=Date.now(); render();
 }
 function proxima(){
   const vt=st.voto; vt.revelando=null; vt.i++;
@@ -389,7 +390,7 @@ document.addEventListener('click',e=>{
     case 'continuar': if(st.quiz.i<QUIZ.length-1){st.quiz.i++;st.quiz.resp=null}else{st.quiz.fim=true;if(!st.quizFeito){st.quizFeito=true;st.aulas=2}} render(); break;
     case 'voltar-trilha': ir('trilhas'); break;
     case 'refazer': st.voto={i:0,votos:[],fim:false,revelando:null}; render(); break;
-    case 'proxima': proxima(); break;
+    case 'proxima': if(Date.now()-(st.voto.revelouEm||0)>500) proxima(); break; // evita que o 2º toque de um toque duplo no voto pule a revelação
     case 'abrir-voto': ir('voto'); break;
     case 'bloqueada': toast('Conclua a aula anterior para liberar.'); break;
     case 'em-breve': toast('Disponível na versão completa do app.'); break;
