@@ -25,6 +25,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%;margin:0}
 html{touch-action:manipulation}
+html,body{overscroll-behavior:none}
 body{background:var(--fundo);font-family:var(--corpo);color:var(--ink);display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
 :focus-visible{outline:calc(2*var(--u)) solid var(--azul);outline-offset:calc(2*var(--u))}
@@ -59,7 +60,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .pts-sobe{animation:sobe .5s ease}
 @keyframes sobe{40%{transform:scale(1.18)}}
 
-.conteudo{flex:1;min-height:0;overflow-y:auto;padding:calc(13.2*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u))}
+.conteudo{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:calc(13.2*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u))}
 .conteudo.g8{gap:calc(7.92*var(--u))}
 .titulo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal;margin:0}
 .sub{color:var(--cinza);font-size:calc(9.24*var(--u));line-height:1.35;margin:0}
