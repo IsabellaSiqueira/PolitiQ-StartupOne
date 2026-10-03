@@ -415,6 +415,8 @@ function votar(v,dx){
   try{navigator.vibrate&&navigator.vibrate(12)}catch(e){} // vibração curta no Android; o iOS ignora
   ganhar(10); vt.revelando=v; vt.revelouEm=Date.now(); render();
   if(dx){const n=$('#lei');n.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;void n.offsetWidth;n.style.transition='transform .25s';n.style.transform=''}
+  // o cartão cresce com a revelação; rola o mínimo para "Próxima lei" não ficar escondido atrás da barra
+  $('#bprox').scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 function proxima(){
   const vt=st.voto; vt.revelando=null; vt.i++;
