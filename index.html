@@ -94,18 +94,18 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .txt b{font-size:calc(9.9*var(--u));font-weight:700}
 .txt span{font-size:calc(7.92*var(--u));color:var(--cinza);line-height:1.3}
 
-.botao{border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u)) calc(10.56*var(--u));font-weight:700;font-size:calc(9.9*var(--u));letter-spacing:calc(.66*var(--u));text-transform:uppercase;text-align:center;width:100%;min-height:44px;transition:transform .08s, box-shadow .08s}
+.botao{border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u)) calc(10.56*var(--u));font-weight:700;font-size:calc(9.9*var(--u));letter-spacing:calc(.66*var(--u));text-transform:uppercase;text-align:center;width:100%;transition:transform .08s, box-shadow .08s}
 .botao:active{transform:translate(calc(2.64*var(--u)),calc(2.64*var(--u)));box-shadow:0 0 0 var(--ink)}
 .botao.preto{background:var(--ink);color:var(--papel)}
 .botao.preto.amarelo-txt{color:var(--amarelo)}
 .botao.amarelo{background:var(--amarelo)}
 .botao.branco{background:var(--papel)}
 .acoes{display:flex;gap:calc(7.92*var(--u))}
-.pular{font-weight:700;font-size:calc(8.58*var(--u));color:var(--cinza);text-align:center;width:100%;padding:calc(4*var(--u));min-height:44px}
+.pular{font-weight:700;font-size:calc(8.58*var(--u));color:var(--cinza);text-align:center;width:100%;padding:calc(4*var(--u))}
 
 /* quiz */
 .pergunta{font-family:var(--display);font-size:calc(14.52*var(--u));line-height:1.15;margin:0}
-.opcao{background:var(--papel);border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(1.98*var(--u)) calc(1.98*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u));font-weight:500;font-size:calc(9.9*var(--u));display:flex;align-items:center;gap:calc(5.28*var(--u));width:100%;min-height:44px;transition:opacity .2s}
+.opcao{background:var(--papel);border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(9.24*var(--u));box-shadow:calc(1.98*var(--u)) calc(1.98*var(--u)) 0 var(--ink);padding:calc(9.24*var(--u));font-weight:500;font-size:calc(9.9*var(--u));display:flex;align-items:center;gap:calc(5.28*var(--u));width:100%;transition:opacity .2s}
 .opcao>span:first-child{flex:1}
 .opcao:not(:disabled):active{transform:translate(calc(1.98*var(--u)),calc(1.98*var(--u)));box-shadow:none}
 .opcao.certa{background:var(--amarelo);border-width:calc(1.98*var(--u));box-shadow:calc(2.64*var(--u)) calc(2.64*var(--u)) 0 var(--ink)}
@@ -162,8 +162,11 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .carimbo.ap.fixo{--r:10deg} .carimbo.rj.fixo{--r:-10deg}
 @keyframes carimba{0%{transform:scale(2) rotate(var(--r));opacity:0}100%{transform:scale(1) rotate(var(--r));opacity:1}}
 .fonte a{color:var(--azul);font-weight:700}
-/* links pequenos: área de toque de ~44px sem mudar o desenho (padding compensado por margem negativa) */
-.fonte a,.mini a{display:inline-block;padding:15px 6px;margin:-15px -6px}
+/* telas de toque: área de toque de pelo menos 44px; nos links, padding compensado por margem negativa para não mudar o desenho */
+@media (max-width:540px), (pointer:coarse){
+  .botao,.opcao,.pular{min-height:44px}
+  .fonte a,.mini a{display:inline-block;padding:15px 6px;margin:-15px -6px}
+}
 /* piso de legibilidade no celular: abaixo de 11px o tamanho para de encolher; acima disso nada muda */
 @media (max-width:540px){
   :root{--t79:max(11px,calc(7.92*var(--u)));--t66:max(11px,calc(6.6*var(--u)));--u6:max(11px,calc(6.6*var(--u)))}
