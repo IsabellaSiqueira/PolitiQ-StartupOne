@@ -35,6 +35,15 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .celular{width:100vw;height:100%;border:0;border-radius:0;box-shadow:none}
   .header{padding-top:calc(14*var(--u))!important}
 }
+@supports (height:100dvh){ html{height:100dvh} }
+/* telas mais baixas que o mockup (ou com a barra do navegador visível): só os respiros verticais encolhem */
+@media (max-width:540px) and (min-aspect-ratio:1/2){
+  :root{--u:min(calc(100vw / 257.4), calc((100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) / 430))}
+  @supports (height:100dvh){ :root{--u:min(calc(100vw / 257.4), calc((100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) / 430))} }
+  .header{padding-top:calc(7*var(--u))!important;padding-bottom:calc(6*var(--u))}
+  .conteudo{padding:calc(9.9*var(--u)) calc(13.2*var(--u));gap:calc(6.6*var(--u))}
+  .lei{padding:calc(11*var(--u));gap:calc(6.6*var(--u))}
+}
 
 .header{background:var(--creme);border-bottom:calc(1.98*var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:calc(34.32*var(--u)) calc(13.2*var(--u)) calc(9.24*var(--u));flex-shrink:0}
 .logo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal}
@@ -118,6 +127,7 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .nav button.ativo{background:var(--amarelo)}
 .nav button.ativo i{background:var(--ink)}
 @media (max-width:540px){ .nav button{padding-bottom:calc(calc(10*var(--u)) + env(safe-area-inset-bottom,0px))} }
+@media (max-width:540px) and (min-aspect-ratio:1/2){ .nav button{padding-top:calc(5.5*var(--u));padding-bottom:calc(5*var(--u) + env(safe-area-inset-bottom,0px));gap:calc(2.6*var(--u))} }
 
 .aviso-toast{position:absolute;left:calc(13.2*var(--u));right:calc(13.2*var(--u));bottom:calc(72*var(--u));background:var(--ink);color:var(--amarelo);border-radius:calc(9.24*var(--u));padding:calc(9*var(--u)) calc(10*var(--u));font-weight:700;font-size:calc(8.6*var(--u));transform:translateY(calc(10*var(--u)));opacity:0;transition:.25s;pointer-events:none;z-index:5}
 .aviso-toast.on{opacity:1;transform:none}
