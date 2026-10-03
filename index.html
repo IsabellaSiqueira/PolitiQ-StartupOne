@@ -400,6 +400,7 @@ function votar(v,dx){
   vt.votos.push({l:LEIS[vt.i],v});
   if(v==='pular'){trava=true;c.style.transition='opacity .2s';c.style.opacity=0;
     setTimeout(()=>{trava=false;proxima()},220);return}
+  try{navigator.vibrate&&navigator.vibrate(12)}catch(e){} // vibração curta no Android; o iOS ignora
   ganhar(10); vt.revelando=v; vt.revelouEm=Date.now(); render();
   if(dx){const n=$('#lei');n.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;void n.offsetWidth;n.style.transition='transform .25s';n.style.transform=''}
 }
