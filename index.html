@@ -106,7 +106,7 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .feedback p{margin:0;font-size:calc(9.24*var(--u));line-height:1.35}
 
 /* voto */
-.lei{background:var(--papel);border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(13.2*var(--u));box-shadow:calc(6.6*var(--u)) calc(6.6*var(--u)) 0 var(--ink);padding:calc(14.52*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u));touch-action:pan-y;user-select:none;position:relative}
+.lei{background:var(--papel);border:calc(1.98*var(--u)) solid var(--ink);border-radius:calc(13.2*var(--u));box-shadow:calc(6.6*var(--u)) calc(6.6*var(--u)) 0 var(--ink);padding:calc(14.52*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u));touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;position:relative}
 .lei h2{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:1.08;margin:0;font-weight:400}
 .lei p{margin:0;font-size:calc(9.9*var(--u));line-height:1.4}
 .oculto{background:var(--creme);border:calc(1.32*var(--u)) dashed var(--ink);border-radius:calc(7.92*var(--u));padding:calc(7.92*var(--u));display:flex;gap:calc(6.6*var(--u));align-items:center;font-weight:700;font-size:calc(7.92*var(--u))}
@@ -360,20 +360,24 @@ function rPerfil(){
 }
 
 function arrastar(c){
-  let x0=0,dx=0,on=false;const ap=c.querySelector('.ap'),rj=c.querySelector('.rj');
-  c.addEventListener('pointerdown',e=>{on=true;x0=e.clientX;dx=0;c.setPointerCapture(e.pointerId);c.style.transition='none'});
-  c.addEventListener('pointermove',e=>{if(!on)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;ap.style.opacity=Math.max(0,Math.min(1,dx/80));rj.style.opacity=Math.max(0,Math.min(1,-dx/80))});
-  const fim=()=>{if(!on)return;on=false;if(Math.abs(dx)>90)votar(dx>0?'aprovo':'rejeito');else{c.style.transition='transform .2s';c.style.transform='';ap.style.opacity=rj.style.opacity=0}};
-  c.addEventListener('pointerup',fim);c.addEventListener('pointercancel',fim);
+  let x0=0,dx=0,id=null;const ap=c.querySelector('.ap'),rj=c.querySelector('.rj');
+  const volta=()=>{c.style.transition='transform .2s';c.style.transform='';ap.style.opacity=rj.style.opacity=0};
+  // segue só o primeiro dedo; um segundo toque não reinicia o arrasto
+  c.addEventListener('pointerdown',e=>{if(id!==null||e.button>0)return;id=e.pointerId;x0=e.clientX;dx=0;c.setPointerCapture(id);c.style.transition='none'});
+  c.addEventListener('pointermove',e=>{if(e.pointerId!==id)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;ap.style.opacity=Math.max(0,Math.min(1,dx/80));rj.style.opacity=Math.max(0,Math.min(1,-dx/80))});
+  c.addEventListener('pointerup',e=>{if(e.pointerId!==id)return;id=null;if(Math.abs(dx)>90)votar(dx>0?'aprovo':'rejeito',dx);else volta()});
+  // cancelamento (rolagem assumida pelo navegador, gesto do sistema) nunca vota
+  c.addEventListener('pointercancel',e=>{if(e.pointerId!==id)return;id=null;volta()});
 }
 
 let trava=false;
-function votar(v){
+function votar(v,dx){
   const vt=st.voto; if(trava||vt.revelando||vt.fim)return; const c=$('#lei'); if(!c)return;
   vt.votos.push({l:LEIS[vt.i],v});
   if(v==='pular'){trava=true;c.style.transition='opacity .2s';c.style.opacity=0;
     setTimeout(()=>{trava=false;proxima()},220);return}
   ganhar(10); vt.revelando=v; vt.revelouEm=Date.now(); render();
+  if(dx){const n=$('#lei');n.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;void n.offsetWidth;n.style.transition='transform .25s';n.style.transform=''}
 }
 function proxima(){
   const vt=st.voto; vt.revelando=null; vt.i++;
