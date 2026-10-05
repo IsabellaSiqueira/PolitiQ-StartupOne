@@ -6,7 +6,7 @@
 <title>politiQ</title>
 <meta name="theme-color" content="#f3eee2">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="icon" type="image/svg+xml" href="simbolo-politiq.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -45,6 +45,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   body{display:block}
   .celular{width:100vw;height:100%;border:0;border-radius:0;box-shadow:none}
   .header{padding-top:calc(14*var(--u) + env(safe-area-inset-top,0px))!important}
+  .logo{height:32px}
+  .nav button svg{width:20px;height:20px}
 }
 @supports (height:100dvh){ html{height:100dvh} }
 /* telas mais baixas que o mockup (ou com a barra do navegador visível): só os respiros verticais encolhem */
@@ -57,7 +59,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 }
 
 .header{background:var(--creme);border-bottom:calc(1.98*var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:calc(34.32*var(--u)) calc(13.2*var(--u)) calc(9.24*var(--u));flex-shrink:0}
-.logo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal}
+.logo{display:block;height:calc(21.12*var(--u));width:auto} /* 382x124; 32px no celular de 390px, e acompanha a escala do mockup no desktop */
 .pill{display:inline-flex;align-items:center;border-radius:calc(13.2*var(--u));padding:calc(3.3*var(--u)) calc(6.6*var(--u));font-weight:700;letter-spacing:calc(.66*var(--u));text-transform:uppercase;white-space:nowrap;line-height:normal;font-size:calc(7.26*var(--u))}
 .pill.borda{border:calc(1.32*var(--u)) solid var(--ink)}
 .pill.amarela{background:var(--amarelo)}
@@ -134,11 +136,10 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 /* nav */
 .nav{background:var(--papel);border-top:calc(1.98*var(--u)) solid var(--ink);display:flex;flex-shrink:0}
 .nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:calc(3.96*var(--u));padding:calc(7.92*var(--u)) calc(2.64*var(--u)) calc(17.16*var(--u));background:var(--papel)}
-.nav button i{width:calc(11.88*var(--u));height:calc(11.88*var(--u));border:calc(1.65*var(--u)) solid var(--ink);border-radius:calc(3.3*var(--u));background:var(--papel)}
+.nav button svg{width:calc(13.2*var(--u));height:calc(13.2*var(--u));flex-shrink:0}
 .nav button span{font-weight:700;font-size:calc(6.6*var(--u));letter-spacing:calc(.33*var(--u));text-transform:uppercase;white-space:nowrap}
 .nav button:active{background:var(--creme)}
 .nav button.ativo{background:var(--amarelo)}
-.nav button.ativo i{background:var(--ink)}
 @media (max-width:540px){ .nav button{padding-bottom:calc(calc(10*var(--u)) + env(safe-area-inset-bottom,0px))} }
 @media (max-width:540px) and (min-aspect-ratio:1/2){ .nav button{padding-top:calc(5.5*var(--u));padding-bottom:calc(5*var(--u) + env(safe-area-inset-bottom,0px));gap:calc(2.6*var(--u))} }
 
@@ -197,13 +198,13 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 </head>
 <body>
 <div class="celular" id="cel">
-  <header class="header"><span class="logo">politiQ</span><span class="pill borda amarela" id="hpill">450 pts</span></header>
+  <header class="header"><img class="logo" src="logo-politiq.svg" alt="politiQ" width="382" height="124"><span class="pill borda amarela" id="hpill">450 pts</span></header>
   <main class="conteudo" id="tela"></main>
   <nav class="nav" id="nav" aria-label="Navegação">
-    <button data-aba="trilhas"><i></i><span>Trilhas</span></button>
-    <button data-aba="voto"><i></i><span>Voto às Cegas</span></button>
-    <button data-aba="ferramentas"><i></i><span>Ferramentas</span></button>
-    <button data-aba="perfil"><i></i><span>Perfil</span></button>
+    <button data-aba="trilhas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.5"/></svg><span>Trilhas</span></button>
+    <button data-aba="voto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></svg><span>Voto às Cegas</span></button>
+    <button data-aba="ferramentas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Ferramentas</span></button>
+    <button data-aba="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Perfil</span></button>
   </nav>
   <div class="aviso-toast" id="toast" role="status"></div>
 </div>
