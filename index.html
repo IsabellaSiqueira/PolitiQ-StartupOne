@@ -71,7 +71,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .pts-sobe{animation:sobe .5s ease}
 @keyframes sobe{40%{transform:scale(1.18)}}
 
-.conteudo{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:calc(13.2*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u))}
+.conteudo{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:calc(13.2*var(--u));display:flex;flex-direction:column;gap:calc(9.24*var(--u))}
 .conteudo.g8{gap:calc(7.92*var(--u))}
 .titulo{font-family:var(--display);font-size:calc(17.16*var(--u));line-height:normal;margin:0}
 .sub{color:var(--cinza);font-size:calc(9.24*var(--u));line-height:1.35;margin:0}
@@ -127,6 +127,9 @@ button.linha:active{transform:translate(calc(2*var(--u)),calc(2*var(--u)));box-s
 .carimbo{position:absolute;bottom:calc(12*var(--u));font-family:var(--display);font-size:calc(13*var(--u));padding:calc(2*var(--u)) calc(7*var(--u));border:calc(2.5*var(--u)) solid var(--ink);border-radius:calc(6*var(--u));opacity:0;pointer-events:none}
 .carimbo.ap{right:calc(12*var(--u));background:var(--amarelo);transform:rotate(10deg)}
 .carimbo.rj{right:calc(12*var(--u));background:var(--ink);color:var(--papel);transform:rotate(-10deg)}
+.carimbo{transition:transform .12s}
+.lei.pronto .carimbo.ap{transform:rotate(10deg) scale(1.12)}
+.lei.pronto .carimbo.rj{transform:rotate(-10deg) scale(1.12)}
 .revelado{display:flex;flex-direction:column;gap:calc(6.6*var(--u))}
 .txt span.autor{font-family:var(--display);font-size:calc(12.5*var(--u));line-height:1.1;color:var(--ink)}
 .mini{font-size:calc(7.92*var(--u));color:var(--cinza)}
@@ -397,12 +400,25 @@ function rPerfil(){
 }
 
 function arrastar(c){
-  let x0=0,dx=0,id=null;const ap=c.querySelector('.ap'),rj=c.querySelector('.rj');
-  const volta=()=>{c.style.transition='transform .2s';c.style.transform='';ap.style.opacity=rj.style.opacity=0};
+  const LIMIAR=90; // distância que vota; o carimbo fica inteiro exatamente aqui
+  let x0=0,dx=0,id=null,raf=0,amostras=[];const ap=c.querySelector('.ap'),rj=c.querySelector('.rj');
+  const pinta=()=>{raf=0;const k=Math.min(1,Math.abs(dx)/LIMIAR);
+    c.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;ap.style.opacity=dx>0?k:0;rj.style.opacity=dx<0?k:0;c.classList.toggle('pronto',k===1)};
+  const volta=()=>{cancelAnimationFrame(raf);raf=0;c.style.transition='transform .2s';c.style.transform='';c.style.willChange='';ap.style.opacity=rj.style.opacity=0;c.classList.remove('pronto')};
   // segue só o primeiro dedo; um segundo toque não reinicia o arrasto
-  c.addEventListener('pointerdown',e=>{if(id!==null||e.button>0)return;id=e.pointerId;x0=e.clientX;dx=0;c.setPointerCapture(id);c.style.transition='none'});
-  c.addEventListener('pointermove',e=>{if(e.pointerId!==id)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/22}deg)`;ap.style.opacity=Math.max(0,Math.min(1,dx/80));rj.style.opacity=Math.max(0,Math.min(1,-dx/80))});
-  c.addEventListener('pointerup',e=>{if(e.pointerId!==id)return;id=null;if(Math.abs(dx)>90)votar(dx>0?'aprovo':'rejeito',dx);else volta()});
+  c.addEventListener('pointerdown',e=>{if(id!==null||e.button>0)return;id=e.pointerId;
+    // se o cartão ainda estava voltando ao centro, continua de onde está, sem salto
+    const tr=getComputedStyle(c).transform;dx=tr&&tr!=='none'?new DOMMatrix(tr).m41:0;x0=e.clientX-dx;
+    amostras=[[e.timeStamp,e.clientX]];c.setPointerCapture(id);c.style.transition='none';c.style.willChange='transform'});
+  c.addEventListener('pointermove',e=>{if(e.pointerId!==id)return;dx=e.clientX-x0;
+    amostras.push([e.timeStamp,e.clientX]);while(amostras.length>2&&e.timeStamp-amostras[0][0]>100)amostras.shift();
+    if(!raf)raf=requestAnimationFrame(pinta)});
+  c.addEventListener('pointerup',e=>{if(e.pointerId!==id)return;id=null;cancelAnimationFrame(raf);raf=0;dx=e.clientX-x0;
+    // vota se passou do limiar ou se foi um flick: velocidade dos últimos 100ms de movimento acima de 0,3px/ms,
+    // na mesma direção do arrasto e sem o dedo ter parado antes de soltar
+    const [t0,xa]=amostras[0],[t1,xb]=amostras[amostras.length-1],v=(xb-xa)/Math.max(1,t1-t0);
+    const flick=e.timeStamp-t1<100&&Math.abs(dx)>30&&Math.abs(v)>.3&&Math.sign(v)===Math.sign(dx);
+    if(Math.abs(dx)>=LIMIAR||flick)votar(dx>0?'aprovo':'rejeito',dx);else volta()});
   // cancelamento (rolagem assumida pelo navegador, gesto do sistema) nunca vota
   c.addEventListener('pointercancel',e=>{if(e.pointerId!==id)return;id=null;volta()});
 }
